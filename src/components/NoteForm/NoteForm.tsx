@@ -23,8 +23,8 @@ const initialValues: NoteFormValueProps = {
 
 const OrderFormSchema = Yup.object().shape({
   title: Yup.string()
-    .min(3, "Name must be at least 3 characters")
-    .max(50, "Name is too long")
+    .min(3, "Title must be at least 3 characters")
+    .max(50, "Title is too long")
     .required("Title is required"),
   content: Yup.string().max(500, "Too long"),
   tag: Yup.string().required("Please choose your tag"),
@@ -35,24 +35,24 @@ export default function NoteForm({ onClose }: NoteFormProps) {
 
   const mutationPost = useMutation({
     mutationFn: async ({ title, content, tag }: NoteFormValueProps) => {
-      const res = await createNote({ title, content, tag });
-      return res;
+      return await createNote({ title, content, tag });
     },
+
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["myNoteHubKey"] });
+      onClose();
     },
   });
 
-  const handleCreateNote = ({ title, content, tag }: NoteFormValueProps) => {
-    mutationPost.mutate({ title, content, tag });
-  };
+  // const handleCreateNote = ({ title, content, tag }: NoteFormValueProps) => {
+  //   mutationPost.mutate({ title, content, tag });
+  // };
 
   const handleSubmit = (
     values: NoteFormValueProps,
     actions: FormikHelpers<NoteFormValueProps>
   ) => {
-    handleCreateNote(values);
-    onClose();
+    mutationPost.mutate(values);
     actions.resetForm();
   };
 

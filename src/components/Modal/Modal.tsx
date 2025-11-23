@@ -23,7 +23,7 @@ export default function Modal({ onClose, children }: ModalProps) {
     document.body.style.overflow = "hidden";
 
     return () => {
-      document.addEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
   }, [onClose]);
