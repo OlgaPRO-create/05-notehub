@@ -18,7 +18,7 @@ interface NoteFormProps {
 const initialValues: NoteFormValueProps = {
   title: "",
   content: "",
-  tag: "",
+  tag: "Todo",
 };
 
 const OrderFormSchema = Yup.object().shape({
@@ -43,10 +43,6 @@ export default function NoteForm({ onClose }: NoteFormProps) {
       onClose();
     },
   });
-
-  // const handleCreateNote = ({ title, content, tag }: NoteFormValueProps) => {
-  //   mutationPost.mutate({ title, content, tag });
-  // };
 
   const handleSubmit = (
     values: NoteFormValueProps,
